@@ -1,0 +1,41 @@
+Comparison operators
+> greater than - when left is greater than the right
+
+Syntax:
+Select * from User_Activity
+WHERE Engagement > 1;
+
+< Less than - When the left is less than the right
+
+Syntax:
+Select * from User_Activity
+WHERE Engagement < 1;
+
+= Equals - When the left equals right
+
+Syntax:
+Select * from User_Activity
+WHERE Engagement = 1;
+
+(!=) or (<>) - When the left is not equal to right
+
+Syntax:
+Select * from User_Activity
+WHERE Engagement <> 1;
+
+or
+
+Select * from User_Activity
+WHERE Engagement != 1;
+
+>= Left is greater than equal to right
+
+Syntax:
+Select * from User_Activity
+WHERE Engagement >= 1;
+
+<= Left is less than equal to right
+
+Syntax:
+Select * from User_Activity
+WHERE Engagement <= 1;
