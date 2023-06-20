@@ -1,5 +1,4 @@
-Wild cards are special characters used in where clauses	(They are used with a 'LIKE' keyword)
-
+**Wild cards are special characters used in where clauses	(They are used with a 'LIKE' keyword)
 These characters are used for substitution of string characters
 
 % - symbol, matches 0 or more characters
