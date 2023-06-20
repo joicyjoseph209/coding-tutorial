@@ -1,0 +1,35 @@
+#Syntax
+select Aggregation_function(col_name)
+as Alias_name(Temporary_name)
+from Table_name;
+
+# How to find out minimum and maximum salary from a table
+
+select MIN(salary) 
+as Min_Salary,
+MAX(salary) as MAX_SALARY 
+from employees_detail; 
+
+#This is an example of querying Total amount from a particular column (department). Applying a filter of sports 
+#Total salary for sports department
+
+select SUM(salary)
+as Total_salary
+from employees_detail
+where department = "sports";
+
+#This is an example of querying total number of employees from a column department (Sports and clothing) in the table employees_detail
+
+select count(employee_id)
+as No_of_employees
+from employees_detail
+where department IN ("clothing", "Sports"); 
+
+#Average salary of employees from a certain region. This example uses a region called region1
+
+select Avg(salary)
+as Average_salary
+from employees_detail
+where region_id = 1;
+
+
