@@ -1,0 +1,44 @@
+Logical operators are used for data access and manipulation (Used to access if the condition is TRUE/FALSE)
+
+And - multiple conditions and if all TRUE = True 
+
+Syntax: 
+Select * from User_Activity
+WHERE User_Id = 1 AND Engagement > 1;
+
+OR - multiple conditions and if one TRUE = True
+
+Syntax: 
+Select * from User_Activity
+WHERE User_Id = 1 OR Engagement > 1;
+
+NOT - negative operator that reverses the meaning of the result
+
+Syntax:
+Select * from User
+WHERE NOT User_Country = "USA";
+
+IN - Is true if value present in the list
+
+Syntax:
+Select * from User
+WHERE User_Country in ("USA","UK");
+
+BETWEEN - Is true if value is between a range
+
+Syntax:
+Select * from User_Activity
+WHERE Engagement between 1 and 5;
+
+ANY - Is true if one comparison is true
+
+Syntax:
+select * from User_Activity
+where Engagement > any(select Engagement from User_past_activity);
+
+ALL - Is true if all comparisons are true
+
+Syntax:
+select * from User_Activity
+where Engagement < ALL(select Engagement from User_past_activity);
+
