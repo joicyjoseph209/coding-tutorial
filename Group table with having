@@ -1,0 +1,21 @@
+create table country(
+Region_id INT NOT NULL,
+Region varchar(55),
+country varchar(55));
+
+insert into country values(1, "Southwest", "United states");
+insert into country values(2, "Northeast", "United states");
+insert into country values(3, "Northwest", "United states");
+insert into country values(4, "Central", "Mexico");
+insert into country values(5, "East", "Mexico");
+insert into country values(6, "Quebec", "Canada");
+insert into country values(7, "Nova Scotia", "Canada");
+
+#Find out how many regions with Odd region_id are present in each country
+
+select country,
+count(Region)
+as Number_of_Region
+from country
+where Region_id % 2 <> 0
+Group by country;
