@@ -1,0 +1,57 @@
+#Group by, statement groups rows that have same values, it would be arranged in a group.
+
+#syntax
+select AGGREGATOR_COL_NAME,
+AGGREGATION_FUNCTION(COL_NAME)
+as Alias_Name
+from Table_name
+GROUP BY AGGREGATOR_COL_NAME
+
+#Examples
+#How many regions are there for each country
+
+select Country,
+Count(Regions)
+as Number_of_Regions
+from Regions
+group by Country;
+  
+select * from regions;
+
+select country,
+count (region)
+as Number_of_Regions
+FROM regions
+group by country;
+
+#Employee information table
+
+
+#Total salary based on departments
+
+select department,
+SUM (salary)
+as Total_salary_as_per_department
+from employees_detail
+Group by department;
+
+#Total salary based on departments fro region 1 and 2
+
+select department, 
+SUM(salary)
+as Total_salary
+from employees_detail
+where region_id in(1,2)
+Group by department;
+
+#Total number of employees on each departments
+
+select department,
+count(employee_id)
+as Number_of_employees
+from employees_detail
+Group by department;
+
+
+    
+
