@@ -1,0 +1,63 @@
+#In keyword helps your search value from a List of values
+# It can be used as an alternative to ALL operator
+
+create table User1 #Create the table user1 to test the syntax
+
+(User_id INT NOT NULL,
+User_language varchar(55),
+User_country varchar(55),
+User_city varchar(55));
+
+insert into User1 values (1, "en-US", "USA", "Seatle");
+insert into User1 values (2, "en-UK", "Uk", "London");
+insert into User1 values (3, "en-IN", "INDIA", "Delhi");
+
+#Create the table user_activity1 to test the syntax
+
+create table User_activity1(
+User_id INT NOT NULL,
+Query_id varchar(55),
+User_query varchar(55),
+Pages_showed INT,
+Pages_clicked varchar(55),
+Engagement FLOAT);
+
+insert into User_activity1 values(1, "Q1345667", "Graph theory and its application", 10, "P136576", 2);
+insert into User_activity1 values(2, "Q1345668", "Pubs near me", 20, "P14457", 1);
+insert into User_activity1 values(3, "Q1345669", "Graph data structure", 15, "P1278", 0.09);
+insert into User_activity1 values(4, "Q1345670", "Famous cafe in Delhi-ncr", 12, "P156889", 7);
+
+#Looking for people whose User_id is either 1 or 2
+
+select * from User_activity1
+where User_id IN (1 , 2); 
+
+
+
+# Need to find a person who is from India in User_activity. In this example the main query has to be supported with a SUB QUERY extracting information from other table using wildcard
+
+select * from User_activity1
+where User_id in
+(select User_id from User1
+where User_country like "IN%");
+
+Some additional Questions for practice
+
+#Find out the names of employees who work in Toys, sports, or tapes department
+
+select * from employees_detail
+where department IN ("Toys", "sports", "Games");
+
+
+#Employee details for the Quebec region
+
+select * from employees_detail
+where region_id IN(select region_id from regions
+where region like "Quebec");
+
+
+
+
+
+
+
