@@ -1,0 +1,58 @@
+#Specific data selection refers to the process of gathering or selecting data that is targetted and tailored to a particular research question or objective
+#Keywords mainly used in specific data selection
+# LIKE - Used to search for string data that matches a specific pattern
+# IN
+# NOT IN
+# EXISTS
+# LIMITS
+# DISTINCT
+
+create table Health_details(
+Insurance_id INT NOT NULL,
+Name_patient varchar(55),
+Disease varchar(55));
+
+insert into Health_details values (121 , "Jadu nath", "Cancer:Blood" );
+insert into Health_details values (159 , "Sikhar Das", "Cancer:Colorectal" );
+insert into Health_details values (233 , "Samir Ali", "Hepatitis B" );
+insert into Health_details values (244 , "Nikhil Ahuja", "Hepatitis C" );
+insert into Health_details values (234 , "Sudhir Patra", "Cancer:Lung" );
+insert into Health_details values (211 , "Hema Bohra", "Cancer:Lung" );
+insert into Health_details values (129 , "Amit Singh", "High Blood pressure" );
+
+# Q1. Find out the names of patients who has made any types of claims of cancer 
+
+#LIKE Keyword will be used to find out data that matches a specific pattern, LIKE operators are usually used with WHERE clause
+#We can combine multiple LIKE'S to combine multiple patterns
+
+#Syntax
+#Select column_name1, column_name2
+#From Table_name
+#Where column_name1 LIKE pattern;
+select * 
+from Health_details
+where Disease like "Cancer%";
+
+
+# Q2. Find out the names of patients who has made any types of claims of cancer and their name starts with letter "S"
+
+select * 
+from Health_details
+where Disease like "Cancer%" and Name_Patient like "S%";
+
+#Some additional examples
+
+# Find out the employees who work in toys department with a first name starting with "A"
+
+select * from employees_detail
+where department like "Toys" and first_name like "A%"; #Toys is the department in dummy table employees_details, where first_name starts with "A"
+
+
+# Find out the employees with a first name starting with "A" or "S"
+
+select * from employees_detail
+where first_name like "A%" or first_name like "S%";
+
+# Find out the employees with a first name not starting with "A"
+select * from employees_detail
+where first_name NOT LIKE "A%";
