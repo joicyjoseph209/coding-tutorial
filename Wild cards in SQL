@@ -26,6 +26,7 @@ Syntax:
 select * from User
 where User_city like '[A-L]%';
 
+
 ^ - symbol, matches any one(1) character not specified within the brackets
 
 Syntax:
