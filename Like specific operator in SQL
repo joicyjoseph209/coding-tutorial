@@ -7,6 +7,7 @@
 # LIMITS
 # DISTINCT
 
+
 create table Health_details(
 Insurance_id INT NOT NULL,
 Name_patient varchar(55),
