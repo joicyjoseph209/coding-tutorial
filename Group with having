@@ -29,3 +29,23 @@ from country
 Group by country
 having Number_of_Region < 3;
 
+#Example for the syntax in which sorting is done based on department in which employee count >50 arranged in ascending order
+
+select department, 
+count (employee_id)
+as Employee_per_department
+from employees_detail
+group by department
+having Employee_per_department > 50
+order by Employee_per_department ASC;
+
+#Example for the syntax in which sorting is done based on department in which employee count >50 arranged in descending order
+
+select department, 
+count (employee_id)
+as Employee_per_department
+from employees_detail
+group by department
+having Employee_per_department > 50
+order by Employee_per_department DESC;
+
