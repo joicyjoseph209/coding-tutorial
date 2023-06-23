@@ -1,0 +1,45 @@
+#DISTINCT helps to identify unique elements present in a column
+#More columns you add in distinct the more cardinality you will have
+
+#Syntax
+#Select DISTINCT col1, col2...........
+#from Table_1
+
+#Syntax
+#Select DISTINCT col1, col2...........
+#from Table_1
+#Group by column_name;
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Get the list of UNIQUE company names from the list where interns work
+select DISTINCT Company from Internships;
+
+#Get the list of UNIQUE company and city names from the list where interns work
+select DISTINCT Company, City from Internships;
+
+#count how many unique monthly stipend values are there
+select COUNT(DISTINCT Monthly_stipend) from Internships;
+
+#count how many unique monthly stipend values and arrange them in descending order
+select DISTINCT Monthly_stipend
+from Internships
+order by Monthly_stipend DESC;
+
+
+#table for practice------------------------------------------------------------------------------------------------------------------------------------------------------
+
+create table Internships(
+Intern_Id INT NOT NULL,
+Intern_name VARCHAR(55),
+Company VARCHAR(55),
+City VARCHAR(55),
+Monthly_stipend INT NOT NULL);
+
+insert into Internships values(1, "George Matthews", "Microsoft", "Pune", 50000); 
+insert into Internships values(2, "Abhay Pal", "Google ", "Mumbai", 55000);
+insert into Internships values(3, "Neena Patel", "Microsoft", "Pune", 47000);
+insert into Internships values(4, "Vikram Singh", "Amazon", "Bengaluru", 48000);
+insert into Internships values(5, "Parvati Shinde", "Amazon", "Pune", 47000);
+insert into Internships values(6, "Rita Gupta", "Microsoft", "Mumbai", 50000);
+
