@@ -1,0 +1,39 @@
+# Exist operator used to test if the condition in subquery is True
+# If the condition is True then the outer query is executed and the output is returned
+
+#Syntax
+#Select col1, col2
+#from Table_1
+#where EXISTS
+#(Select Col_name 
+#from table_2
+#where condition);
+
+#Syntax for multiple condition in EXIST statement
+#Select col1, col2
+#from Table_1
+#where EXISTS
+#(Select Col_name 
+#from table_2
+#where condition1 and/or condition2); #Incase of Or if one condition is true then the query will execute. AND both conditions need to be true for the query to be executed
+
+
+#Identify If the User_id in the User_activity1 table are associated with the User_id in User1 table (Present in both the tables)
+select * from User_activity1
+where EXISTS(select * from User1
+where User1.User_id = User_activity1.User_id);
+
+#Identify all the User_activity1 if one of the value of user_id in User1 table is 1
+
+select * from User_activity1
+where EXISTS(select * from User1
+where User1.User_id = 1); 
+
+#Identify all the User_activity1 if one of the value of user_id in User1 table is 5
+
+select * from User_activity1
+where EXISTS(select * from User1
+where User1.User_id = 5);
+
+ 
+
