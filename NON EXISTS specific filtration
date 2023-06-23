@@ -1,0 +1,39 @@
+#NON EXIST operator is an inverse of EXIST
+#NOT EXIST operator Filters out the rows that do no have the corresponding value in the related table
+
+#Syntax
+Select column1, column2.....
+from Table1
+where NOT EXISTS (select column1 from table2 where condition); 
+
+#Data for practice
+
+create table customer_info
+(cust_id INT NOT NULL, 
+First_name VARCHAR(55),
+Last_name VARCHAR(55),
+age INT NOT NULL,
+city VARCHAR(55));
+
+create table order_info
+( order_id INT NOT NULL,
+cust_id INT NOT NULL,
+First_name VARCHAR(55));
+
+Insert into customer_info values (1, "Aarav", "Patel", 31, "Mumbai");
+Insert into customer_info values (2, "Advait", "Gupta", 22, "New Delhi");
+Insert into customer_info values (3, "Amit", "Sharma", 22, "Bengaluru");
+Insert into customer_info values (4, "Ananya", "Singh", 25, "Kolkata");
+Insert into customer_info values (5, "Ram", "Mohan", 25, "Bengaluru"); 
+
+Insert into order_info values (1, 1, "Arnav");
+Insert into order_info values (2, 2, "Advait");
+Insert into order_info values (3, 3, "Amit");
+Insert into order_info values (4, 4, "Ananya");
+ 
+ #Find out about the customer who did not order anything 
+ Select * from customer_info
+ where NOT EXISTS (select * from order_info 
+ where order_info.cust_id = customer_info.cust_id);
+ 
+ #In this exmaple it would return all the values in customer_info which has no corresponding values in order_info
