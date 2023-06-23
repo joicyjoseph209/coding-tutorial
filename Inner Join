@@ -1,0 +1,87 @@
+#Joins
+
+#Reason for using - Huge amount of data in different tables
+#Joins clauses uses - Combine rows from 2 or more tables, based on the related column between them
+#Suppose you have 2 tables of data, An Inner join returns the record that have matching values on both tables
+
+
+#Syntax
+select t1.column_name1, t2.column_name2
+from table1 as t1
+inner join table2 as t2
+on t1.column_name = t2.column_name;
+
+#Fetch the matching record of User1 and User_activity1 based on User_id
+
+select * from User1 as U
+Inner join user_activity1 as UA
+ON U.User_id = UA.User_id;
+
+#Fetch the matching record of User1 and User_activity1 based on User_id. Then filter the records based on American users
+
+select * from User1 as U
+Inner join user_activity1 as UA
+ON U.User_id = UA.User_id
+where U.User_country = "USA";
+
+#Fetch User_city and Query_id of the matching records (of user and user activity table based on User id)
+
+select U.User_city, UA.Query_id
+from User1 as U 
+Inner join 
+user_activity1 as UA
+on U.User_id = UA.User_id;'
+
+Data for practicing the above code----------------------------------------------------------------------------------------------------------------------------------------
+
+create table User_activity1(
+User_id INT NOT NULL,
+Query_id varchar(55),
+User_query varchar(55),
+Pages_showed INT,
+Pages_clicked varchar(55),
+Engagement FLOAT);
+
+insert into User_activity1 values(1, "Q1345667", "Graph theory and its application", 10, "P136576", 2);
+insert into User_activity1 values(2, "Q1345668", "Pubs near me", 20, "P14457", 1);
+insert into User_activity1 values(3, "Q1345669", "Graph data structure", 15, "P1278", 0.09);
+insert into User_activity1 values(4, "Q1345670", "Famous cafe in Delhi-ncr", 12, "P156889", 7);
+
+
+create table User1
+(User_id INT NOT NULL,
+User_language varchar(55),
+User_country varchar(55),
+User_city varchar(55));
+
+insert into User1 values (1, "en-US", "USA", "Seatle");
+insert into User1 values (2, "en-UK", "Uk", "London");
+insert into User1 values (3, "en-IN", "INDIA", "Delhi");
+
+
+Some additional practice questions ---------------------------------------------------------------------------------------------------------------------------------------
+
+#Matching records for employees_detail and regions on region_id
+
+select * from regions as r
+Inner join employees_detail as e
+on e.region_id = r.region_id;
+
+
+#Matching records for employees_detail and regions on region_id while only displaying employee_id, first_name and ,country filtering for EAST region only
+
+select e.employee_id, e.first_name, r.region, r.country 
+from regions as r
+inner join employees_detail as e
+on e.region_id = r.region_id
+where r.region = "EAST";
+
+#Matching based on region_id  and department filtering the EAST region_id
+select e.employee_id, e.first_name, r.region, r.country, d.division
+from regions as r
+inner join employees_detail as e 
+on e.region_id = r.region_id
+inner join departments_info as d 
+on d.departments_info_data_data = e.department
+where r.region = "EAST";
+
