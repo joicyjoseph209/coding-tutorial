@@ -1,0 +1,77 @@
+#LIMIT clause is used to fetch the TOPMOST ROWS within the selected results
+#Helps to check the sample of data based on your query
+
+#Syntax
+#Select col1, col2
+#from Table_1
+#LIMIT Number OFFSET Number;
+
+#Problem statement (Get the first 2 rows from the table in the order it has been stored)
+
+select * from User_activity1
+limit 2;
+
+#Problem statement (Get rows 2-3 from the table in the order it has been stored)
+
+select * from User_activity1
+limit 2 OFFSET 1;
+
+#Problem statement (Get the 1st record from user_activity1 where engagement value is atleast 1)
+
+select * from User_activity1
+where Engagement >= 1 LIMIT 1;
+
+
+
+
+
+#Problem statement(Order the User_activity1 data by descending order of Pages_showed. Then return the first 3 rows)
+#DESC command is always used with ORDER BY 
+
+select * from User_activity1
+order by Pages_showed DESC 
+LIMIT 3;
+
+
+#Some additional practice questions--------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Fetch first 10 rows from the data set
+
+select * from employees_detail
+LIMIT 10;
+
+#Fetch first 10 rows from the data set from the 21st row
+select * from employees_detail
+LIMIT 10 Offset 20;
+
+
+#Fetch first 10 rows from the data set where the department is Grocery
+
+select * from employees_detail
+where department = "Grocery" 
+LIMIT 10;
+
+#Fetch last 10 records from employees_detail table
+
+select * from employees_detail
+order by employee_id DESC LIMIT 10;
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#table for practice
+
+create table User_activity1(
+User_id INT NOT NULL,
+Query_id varchar(55),
+User_query varchar(55),
+Pages_showed INT,
+Pages_clicked varchar(55),
+Engagement FLOAT);
+
+insert into User_activity1 values(1, "Q1345667", "Graph theory and its application", 10, "P136576", 2);
+insert into User_activity1 values(2, "Q1345668", "Pubs near me", 20, "P14457", 1);
+insert into User_activity1 values(3, "Q1345669", "Graph data structure", 15, "P1278", 0.09);
+insert into User_activity1 values(4, "Q1345670", "Famous cafe in Delhi-ncr", 12, "P156889", 7);
+
+
