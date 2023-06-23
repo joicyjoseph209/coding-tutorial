@@ -1,0 +1,35 @@
+#NOT IN keyword lists the values except the one's mentioned after the keyword
+
+#Syntax
+#Select col1, col2
+#from Table_name
+#where coln NOT IN (val1, val2......);
+
+#Syntax
+#Select col1, col2
+#from Table_name
+#where coln NOT IN (Select statement);
+
+select * from User_activity1
+where User_id NOT IN (1, 2);
+
+
+# User activity information from users who are NOT FROM India
+select * from User_activity1
+where User_id NOT IN (Select User_id from User1 
+where User_country LIKE "IN%");
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Some additional practice solution
+
+#Find out the names of employees who work in department other than Toys, sports, or games
+
+select * from employees_detail
+where department NOT IN ("Toys", "sports", "games");
+
+
+#Employee details for employees NOT FROM Quebec region
+
+select * from employees_detail
+where region_id NOT IN(select region_id from regions
+where region like "Quebec");
