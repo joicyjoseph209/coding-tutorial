@@ -1,0 +1,120 @@
+#Right join returns all the records from the RIGHT table and matching values in the Left table
+#WHen no matching rows exists for a row in the RIGHT table, the columns of the Left table will have NULLs for these records
+
+#Syntax
+select t1.column_name1, t2.column_name2
+from table1 as t1
+Right join table2 as t2
+on t1.column_name = t2.column_name;
+
+#Q. Get all records from Book ratings and matching values from top 3 books sold based on Book_id
+select * from Top_3_Books_sold as T 
+right join Book_ratings as BR
+on T.Book_id = BR.Book_id; 
+
+#Q. Get all records from Book ratings and matching values from top 3 books sold based on Book_id.
+#In the final output, show all the records of Book_genre and matching values from the data joined in the first part
+
+select * from Top_3_Books_sold as T 
+right join Book_ratings as BR
+on T.Book_id = BR.Book_id
+right join Book_genre as BG
+on BG.Book_id = BR.Book_id;
+
+
+
+
+#Q. Get all records from Book ratings and matching values from top 3 books sold based on Book_id.
+#In the final output, show all the records of Book_genre and matching values from the data joined in the first part
+#Filter the record based on top 3 books sold = NULL
+
+select * from Top_3_Books_sold as T 
+right join Book_ratings as BR
+on T.Book_id = BR.Book_id
+right join Book_genre as BG
+on BG.Book_id = BR.Book_id
+where T.Book_id IS NULL;
+
+
+#Q. Get all records from Book ratings and matching values from top 3 books sold based on Book_id.
+#In the final output, show all the records of Book_genre and matching values from the data joined in the first part
+#Filter the record based on top 3 books sold IS NOT NULL
+
+
+select * from Top_3_Books_sold as T 
+right join Book_ratings as BR
+on T.Book_id = BR.Book_id
+right join Book_genre as BG
+on BG.Book_id = BR.Book_id
+where T.Book_id IS NOT NULL;
+
+
+#Data for practicing the above queries---------------------------------------------------------------------------------------------------------------------------------
+
+create table Book_genre(
+Book_id INT NOT NULL,
+Book_name varchar(55),
+Genre1 varchar(55),
+Genre2 varchar(55));
+
+create table Top_3_Books_sold(
+Book_id INT NOT NULL,
+Book_name varchar(55),
+Author varchar(55));
+
+create table Book_ratings(
+Book_id INT NOT NULL,
+Avg_rating FLOAT);
+
+Insert into Book_genre values (1, "The Fault in our stars", "Young adults", "Romance");
+Insert into Book_genre values (2, "Harry Potter and the Philosopher's stone", "Children Literature", "Fantasy");
+Insert into Book_genre values (3, "The Hunger games", "Young adults", "Science Fiction");
+Insert into Book_genre values (4, "The Maze runner", "Young adults", "Science Fiction");
+Insert into Book_genre values (5, "The Lightening thief", "Young adults", "Fantasy");
+
+Insert into Top_3_Books_sold values (1, "The Fault in our stars", "John Green");
+Insert into Top_3_Books_sold values (3, "The Hunger games", "Suzanne Collins");
+Insert into Top_3_Books_sold values (5, "The Lightening thief", "Rick Riordan");
+
+Insert into Book_ratings values (1, 4.9);
+Insert into Book_ratings values (2, 4.84);
+Insert into Book_ratings values (3, 4.75);
+Insert into Book_ratings values (4, 4.66);
+Insert into Book_ratings values (5, 4.63);
+
+
+Some additional questioned practiced on a bigger dataset-------------------------------------------------------------------------------------------------------------------
+
+#Right join
+
+#Get all the employee records and match it with the department
+
+select * from departments_info as d  
+right join employees_detail as e
+on d.departments_info_data_data = e.department;
+
+#Get all the employee records and match it with the department and only department and employee_id
+
+select d.departments_info_data_data, e.employee_id
+from departments_info as d  
+right join employees_detail as e
+on d.departments_info_data_data = e.department;
+
+#Get all the employee records and match it with the department and only department and employee_id. 
+#Filter these records which doesnt have matching records in department_info
+
+select d.departments_info_data_data, e.employee_id
+from departments_info as d  
+right join employees_detail as e
+on d.departments_info_data_data = e.department
+where d.departments_info_data_data is NULL;
+
+
+#Get all the employee records and match it with the department and only department and employee_id. MAtch this output with region table
+
+select d.departments_info_data_data, e.employee_id, r.region_id, r.region
+from departments_info as d  
+right join employees_detail as e
+on d.departments_info_data_data = e.department
+right join regions as r 
+on r.region_id = e.region_id;
