@@ -1,0 +1,106 @@
+#Left join returns all the records from the left table and matching values in the right table
+#WHen no matching rows exists for a row in the left table, the columns of the right table will have NULLs for these records
+
+#Syntax
+select t1.column_name1, t2.column_name2
+from table1 as t1
+left join table2 as t2
+on t1.column_name = t2.column_name;
+
+Data for practice---------------------------------------------------------------------------------------------------------------------------------------------------------
+create table Book_genre(
+Book_id INT NOT NULL,
+Book_name varchar(55),
+Genre1 varchar(55),
+Genre2 varchar(55));
+
+create table Top_3_Books_sold(
+Book_id INT NOT NULL,
+Book_name varchar(55),
+Author varchar(55));
+
+create table Book_ratings(
+Book_id INT NOT NULL,
+Avg_rating FLOAT);
+
+Insert into Book_genre values (1, "The Fault in our stars", "Young adults", "Romance");
+Insert into Book_genre values (2, "Harry Potter and the Philosopher's stone", "Children Literature", "Fantasy");
+Insert into Book_genre values (3, "The Hunger games", "Young adults", "Science Fiction");
+Insert into Book_genre values (4, "The Maze runner", "Young adults", "Science Fiction");
+Insert into Book_genre values (5, "The Lightening thief", "Young adults", "Fantasy");
+
+Insert into Top_3_Books_sold values (1, "The Fault in our stars", "John Green");
+Insert into Top_3_Books_sold values (3, "The Hunger games", "Suzanne Collins");
+Insert into Top_3_Books_sold values (5, "The Lightening thief", "Rick Riordan");
+
+Insert into Book_ratings values (1, 4.9);
+Insert into Book_ratings values (2, 4.84);
+Insert into Book_ratings values (3, 4.75);
+Insert into Book_ratings values (4, 4.66);
+Insert into Book_ratings values (5, 4.63);
+
+#Problem - Get all records from Book_genre and matching values from Top_3_Books_sold based on Book_id-------------------------------------------------------------------------
+
+select * from Book_genre as B
+LEFT JOIN Top_3_Books_sold as T
+on B.Book_id = T.Book_id;
+
+#Problem - Get all records from Book_genre and matching values from Top_3_Books_sold based on Book_id
+#Along with that data, match with Book_ratings based on Book_id
+
+select * 
+from Book_genre as B
+LEFT JOIN Top_3_Books_sold as T
+on B.Book_id = T.Book_id
+LEFT JOIN Book_ratings as BR
+on B.Book_id = BR.Book_id;
+
+#Problem - Get all records from Book_genre and matching values from Top_3_Books_sold based on Book_id
+#Along with that data, match with Book_ratings based on Book_id
+#filter the data where Top_3_Books_sold does not have a matching record
+
+select * 
+from Book_genre as B
+LEFT JOIN Top_3_Books_sold as T
+on B.Book_id = T.Book_id
+LEFT JOIN Book_ratings as BR
+on B.Book_id = BR.Book_id
+where T.Book_id IS NULL;
+
+Additional solved questions from a bigger data set-------------------------------------------------------------------------------------------------------------------------
+
+#Left join
+
+#Q. Get all departments and employees working in that
+
+select * from departments_info as d 
+left join employees_detail as e 
+on d.departments_info_data_data = e.department;
+
+#Q. Trimmimg down the join to get records of choice like in this case department and employee_id
+select d.departments_info_data_data as department, e.employee_id
+from departments_info as d 
+left join employees_detail as e 
+on d.departments_info_data_data = e.department;
+
+#Q. Trimmimg down the join to get records of choice like in this case department, employee_id, region_id and region name
+
+select d.departments_info_data_data as department, e.employee_id, r.region_id, r.region
+from departments_info as d 
+left join employees_detail as e 
+on d.departments_info_data_data = e.department
+left join regions as r 
+on r.region_id = e.region_id;
+
+
+#Q. Trimmimg down the join to get records of choice like in this case department, employee_id, region_id and region name, where region_id is NULL
+
+select d.departments_info_data_data as department, e.employee_id, r.region_id, r.region
+from departments_info as d 
+left join employees_detail as e 
+on d.departments_info_data_data = e.department
+left join regions as r 
+on r.region_id = e.region_id
+where r.region_id is NULL;
+
+
