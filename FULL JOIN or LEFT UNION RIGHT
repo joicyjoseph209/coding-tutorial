@@ -1,0 +1,45 @@
+#FULL JOIN OR LEFT UNION RIGHT 
+#  Suppose you have two tables of information.  
+# A full join returns all the records from Table 1 and Table 2, whether they have a matching row or not.
+# When no matching rows exist for a row in the Table 1, the columns of the Table 2 will have NULLs for those records 
+#  Similarly, the reverse also holds true. That is, when no matching rows exist for a row in the Table 2, the columns of the Table 1 will have NULLs for those records.
+
+#Syntax---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+select t1.column_name1, t2.column_name2
+from table1 as t1
+LEFT join table2 as t2
+on t1.column_name = t2.column_name;
+union
+select t1.column_name1, t2.column_name2
+from table1 as t1
+RIGHT join table2 as t2
+on t1.column_name = t2.column_name;
+
+Data for practicing the queries gives below----------------------------------------------------------------------------------------------------------------------------------
+create table School_library_database(
+Student_id INT NOT NULL,
+Student_name varchar(55));
+
+create table Book_Borrowed(
+Student_id INT NOT NULL,
+Book_name varchar(55));
+
+Insert into School_library_database values (1, "George Mathews");
+Insert into School_library_database values (2, "Abhay Pal");
+Insert into School_library_database values (3, "Neena Patel"); 
+
+Insert into Book_Borrowed values (1, "The Catcher in the Rye");
+Insert into Book_Borrowed values (3, "The Time Machine");
+Insert into Book_Borrowed values (4, "The Great Gatsby");
+
+Below is the output we would get after a full join based on matching student IDs to return the student and book names. Observe how we get null values when there is no match between the tables.
+
+select SL.Student_name, BB.Book_name
+from School_library_database as SL
+left join Book_Borrowed as BB
+ON SL.Student_id = BB.Student_id
+union 
+select SL.Student_name, BB.Book_name 
+from School_library_database as SL
+right join Book_Borrowed as BB
+ON SL.Student_id = BB.Student_id;
