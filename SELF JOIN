@@ -1,0 +1,123 @@
+#SELF JOIN
+#Refers to when a table is joined with itself
+#Useful for querying hierarchical data or comparing rows within the same data
+#Important to use alias name
+
+#Syntax
+select t1.column_name1, t2.column_name2
+from table1 as t1
+LEFT join table2 as t2
+on t1.column_name = t2.column_name;
+#In this both t1 and t2 are the same table
+
+Data to practice the below query------------------------------------------------------------------------------------------------------------------------------------------
+create table Geographic_area( 
+Id INT NOT NULL,
+Area_type varchar(55),
+Parent_id INT NOT NULL);
+
+create table Lab_partners( 
+Id INT NOT NULL,
+Student_name varchar(55),
+Partner_id INT NOT NULL,
+start_date date,
+end_date date);
+
+Insert into Geographic_area values (1, "City", 2);
+Insert into Geographic_area values (2, "State", 3);
+Insert into Geographic_area values (3, "Country", 4);
+Insert into Geographic_area values (4, "Continent", 5);
+
+Insert into Lab_partners values (1, "Eric Jones", 3, "2022-11-26", "2023-01-31");
+Insert into Lab_partners values (2, "Dan Smith", 4, "2022-10-27", "2023-02-01");
+Insert into Lab_partners values (3, "Rani Singh", 1, "2022-12-05", "2023-02-02");
+Insert into Lab_partners values (4, "Rita Paul", 2, "2022-10-29", "2023-01-30");
+
+select * from Lab_partners;
+
+#Fetch the child category names of area type with the along with their parent types-------------------------------------------------------------------------------------------
+
+select c.Area_type as child,
+P.Area_type as Parent
+from Geographic_area as c
+LEFT JOIN Geographic_area as p
+on p.Id = c.Parent_id;
+
+
+#Fetch the record of student names and the names of their associated partners
+
+select p.Student_name as Student,
+c.Student_name as partner		
+from Lab_partners as c
+Inner join Lab_partners as p
+on p.Id = c.Partner_id;
+
+select p.Student_name as Student,
+c.Student_name as partner
+from Lab_partners as c
+Inner join Lab_partners as p
+on p.Id = c.Partner_id;
+
+#Find the overlapping pairs of date range that students spend working on their research article
+select s1.ID as s1_Id,
+s1.start_date as s1_start_date,
+s1.end_date as s1_start_date,
+
+s2.ID as s2_Id,
+s2.start_date as s2_start_date,
+s2.end_date as s2_end_date
+
+from Lab_partners s1
+inner join Lab_partners s2
+
+on s1.start_date < s2.end_date
+and s1.end_date > s2.start_date
+and s1.Id < s2.Id;
+
+Some additional questions practiced in a bigger data set-------------------------------------------------------------------------------------------------------------------
+
+select c.Area_Type as child, p.Area_Type as parent 
+from Geographic_Areas as c 
+left join Geographic_Areas as p 
+on c.Parent_Id = p.Id;
+
+#Fetch the record of student names and the names of their associated partners
+
+select s.Student_Name as Student, p.Student_Name as Partner 
+from Lab_Partners as s 
+inner join Lab_Partners as p  
+on s.Partner_Id = p.Id;
+
+#Find the manager name for each employee
+
+select E1.EmpID, E1.EmpName, E1.ManagerID, E2.EmpName as manager
+from Employee_Info as E1
+inner join Employee_Info as E2 
+on E1.ManagerID = E2.EmpID;
+
+#Other way of writing the same code
+
+select DISTINCT E.EmpID as EmployeeID, E.EmpName as employee_name, E.ExpLevel as current_level, E.LevelID as LevelID, M.NextLevelID as NextLevelID
+from Employee_Info as E
+inner join Employee_Info as M 
+on E.NextLevelID = M.LevelID; 
+
+#Find experience level with next level of experience for all employee
+
+select DISTINCT E1.EmpID, E1.EmpName, E1.LevelID, E1.ExpLevel, E2.NextLevelID as Next_Level_Experience
+from Employee_Info as E1
+inner join Employee_Info as E2 
+on E1.NextLevelID = E2.LevelID;
+
+#overlapping records of employees based on their working duration
+
+select E.EmpID as EmployeeID, E.JoinDate as Startdate, E.ExitDate as Enddate, M.EmpID as EmployeeID, M.JoinDate as Startdate, M.ExitDate as Enddate
+from Employee_Info as E 
+Inner Join  Employee_Info as M 
+on  E.JoinDate < M.ExitDate
+and E.ExitDate > M.JoinDate
+and  E.EmpID < M.EmpID;
+
+
+
+
