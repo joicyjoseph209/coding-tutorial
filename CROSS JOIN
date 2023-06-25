@@ -1,0 +1,42 @@
+#Cross Joins
+#Suppose you have 2 tables 
+#A CROSS JOIN or a CARTESIAN JOIN will return all possible combinations from both the tables and is used without any common dimension
+
+#Syntax
+select table1.column1, table2.column2
+from table1
+CROSS JOIN table2
+
+Data set to practice the below query--------------------------------------------------------------------------------------------------------------------------------------
+Create table colours(
+colour_Id INT NOT NULL,
+colour_Name varchar (55));
+
+Create table sizes(
+size_Id INT NOT NULL,
+size_name varchar (55),
+price FLOAT);
+
+insert into colours values (1, "Red");
+insert into colours values (2, "Blue");
+
+insert into sizes values (1, "Small", 10.00);
+insert into sizes values (2, "Medium", 15.00);
+insert into sizes values (3, "Large", 20.00);
+
+#Create a table containing all the possible combinations of colour and size table----------------------------------------------------------------------------------------------
+
+select * from colours
+cross join sizes;
+
+#Create a table containing all the possible combinations of colour and sizes with their price
+
+select colour_Name, size_name, price  
+from colours
+cross join sizes;
+
+select colours.colour_Name, sizes.size_name, sizes.price
+from colours
+cross join sizes;
+
+
