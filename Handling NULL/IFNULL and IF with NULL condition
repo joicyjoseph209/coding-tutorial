@@ -1,0 +1,95 @@
+#Handling NULLS with joins
+
+#Using IFNULL()
+#IFNULL() replaced the NULL's with the default, specified value.
+#Non-NULL values are returned Normally
+
+#Syntax
+select table1.column1
+IFNULL(t2.column_name2, default_value_if_null)
+from table1 as t1
+JOIN table2 as t2
+on t1.column_name = t2.column_name;
+
+#Using IF() with IS NULL Operator:
+
+#Syntax
+select table1.column1
+IF(t2.column_name2 is NULL, Value_if_Null, value_if_not_null)
+from table1 as t1
+JOIN table2 as t2
+on t1.column_name = t2.column_name;
+
+#Using the IF() function to check if the values are NULL
+#If NULL, the function should return a particular value,
+#Else. return another value.
+
+
+data for practice-------------------------------------------------------------------------------------------------------------------------------------------------------
+create table Geographic_area( 
+Id INT NOT NULL,
+Area_type varchar(55),
+Parent_id INT NOT NULL);
+
+Insert into Geographic_area values (1, "City", 2);
+Insert into Geographic_area values (2, "State", 3);
+Insert into Geographic_area values (3, "Country", 4);
+Insert into Geographic_area values (4, "Continent", 5);
+
+
+#Fetch the child category names of area type along with their parent type--------------------------------------------------------------------------------------------------
+#If the parent value type is NULL then return the value N/A 
+
+select c.Area_type as child,
+IFNULL(p.Area_type, "N/A") as parent
+from Geographic_area as c
+LEFT JOIN Geographic_area as p	
+on c.Parent_id = p.Id;		
+
+additional questions on a large dataset--------------------------------------------------------------------------------------------------------------------------------------
+#Fetch employee_id, region_id and region details such that all departments are part of the output
+
+select e.employee_id as employee_id, e.region_id as region_id,  r.region as regions, r.country as country, d.departments_info_data_data as departments
+from employees_detail as e 
+left join regions as r 
+on e.region_id = r.region_id
+left join departments_info as d
+on e.department = d.departments_info_data_data;
+
+
+
+#Fetch employee_id, region_id and region details such that all departments are part of the output. Pick records that have NULL region_id
+
+select d.departments_info_data_data as departments, e.employee_id as employee_id, e.region_id as region_id,  r.region as regions 
+from departments_info as d 
+left join employees_detail as e
+on e.department = d.departments_info_data_data
+left join regions as r 
+on e.region_id = r.region_id
+where r.region_id is NULL;
+
+
+#Fetch employee_id, region_id and region details such that all departments are part of the output. Pick records that have NULL region_id. Handle NULL values in 3 columns
+
+select d.departments_info_data_data as departments, ifnull(e.employee_id, "No employee_id") as employee_id, ifnull(e.region_id, "No region_id") as region_id,  ifnull(r.region, "No region") as regions 
+from departments_info as d 
+left join employees_detail as e
+on e.department = d.departments_info_data_data
+left join regions as r 
+on e.region_id = r.region_id
+where r.region_id is NULL;
+
+
+#Fetch employee_id, region_id and region details such that all departments are part of the output. Pick records that have NULL region_id. Handle NULL values in 3 columns
+
+select d.departments_info_data_data as departments, if(e.employee_id is NULL, "No employee_id", e.employee_id) as employee_id, if(e.region_id is NULL, "No region_id",e.region_id) as region_id,  if(r.region is NULL, "No region", r.region) as regions 
+from departments_info as d 
+left join employees_detail as e
+on e.department = d.departments_info_data_data
+left join regions as r 
+on e.region_id = r.region_id
+where r.region_id is NULL;
+
+
+
+
