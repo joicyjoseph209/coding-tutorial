@@ -1,0 +1,30 @@
+# Using subqueries with aggregate functions MIN, MAX, AVG
+# Subquery with aggregate clause include an aggregate function which will be further used in the outer clause
+# No specific syntax for it as it can  be used with FROM clause and WHERE clause
+
+
+#Practice on a bigger dataset
+
+#Get the data from the employee who has the highest salary-----------------------------------------------------------------------------------------------------------------
+
+
+SELECT *
+FROM employees_detail
+WHERE salary = (select MAX(salary) from employees_detail);
+
+#Get the proportion of count of employee working in each region 
+
+SELECT region_id, count(employee_id)/(SELECT count(employee_id) from employees_detail) as proportion_of_employees
+FROM employees_detail
+group by region_id
+order by region_id;
+
+#Get the proportion of total salary for each department
+
+
+SELECT department,sum(salary)/(SELECT sum(salary) from employees_detail) as salary_proportion
+FROM employees_detail
+group by department
+order by department;
+
+
