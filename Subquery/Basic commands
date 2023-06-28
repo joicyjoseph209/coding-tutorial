@@ -1,0 +1,72 @@
+#Subqueries
+#Subqueries are queries that are nested inside other SQL queries (A query within a query)
+#Subqueries helps in breaking down complex queries into simple and logical steps where each step provides a subset of results required in main query.
+#Subqueries can be used in many clauses SELECT, INSERT, DELETE, UPDATE, WHERE, FROM, IN or EXISTS
+
+#Although there is no specific structure to subquery, can be written in many ways but these are some broad structures that fits into most of the subqueries. 
+Specific to 
+1. SELECT,
+2. INSERT
+3. UPDATE
+4. DELETE
+
+#Syntax
+#select
+select col_name
+from table_name
+where  condition
+(select col_name 
+from table_name
+where condition);
+
+#Syntax
+#Insert
+insert into table_name
+col_name
+select col_name
+from table_name
+where condition;
+
+#Syntax
+#Update
+update table_name
+set col_name = value
+where condition
+(select col_name from table_name
+where condition);
+
+#Syntax
+#Delete
+delete from table_name
+where condition
+select(col_name
+from table_name
+where condition);
+
+
+#Get the name of highest earning intern
+select * from internships
+where Monthly_Stipend = (select Max(Monthly_Stipend) from internships);
+
+#Add all the records from more_internships into internships
+
+insert into internships
+select * from more_internships;
+
+# Update the monthly stipend values in Internships for each of the Top intern by adding 1000 to their stipend
+
+update internships
+set Monthly_Stipend = Monthly_Stipend + 1000
+where Intern_Id in (select Intern_Id from top_interns);
+
+#Delete rows from internship for those who have already completed their internships
+
+delete from internships
+ where Intern_Id in 
+ (select Intern_Id from completed_internships);
+ 
+ 
+
+
+
+
