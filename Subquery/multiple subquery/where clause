@@ -1,0 +1,79 @@
+#Multiple subqueries
+#We can use this capability when we have to query multiple things that are not readily available in the current table
+
+#Syntax
+SELECT Col1, Col2,...
+FROM   TABLE1 [, TABLE2 ]
+WHERE  PREDICATE
+   (SELECT Col_N]
+   FROM TABLE1[, TABLE2]
+   [WHERE PREDICATE])
+
+
+Data for practice----------------------------------------------------------------------------------------------------------------------------------------------------------
+CREATE TABLE Employees_data(
+Emp_Id int NOT NULL,
+First_Name varchar(16),
+dept_id int NOT NULL
+);
+
+CREATE TABLE department_data(
+dept_Id int NOT NULL,
+Dept_Name varchar(55),
+Location_id int NOT NULL
+);
+
+
+CREATE TABLE Location_data(
+Location_Id int NOT NULL,
+Location_Name varchar(55),
+Postal_code varchar(55)
+);
+
+insert into Employees_data values (101, "Steven", 30);
+insert into Employees_data values (105, "Neena", 10);
+insert into Employees_data values (110, "David", 60);
+insert into Employees_data values (236, "Bruce", 60);
+insert into Employees_data values (115, "Nancy", 50);
+insert into Employees_data values (205, "Diana", 10);
+
+insert into department_data values (10, "Finance", 1700);
+insert into department_data values (20, "HR", 1800);
+insert into department_data values (30, "Shipping", 2400);
+insert into department_data values (60, "Administration", 1700);
+insert into department_data values (80, "IT", 1500);
+insert into department_data values (100, "Marketing", 1800);
+
+insert into Location_data values (1000, "Rome", "9899");
+insert into Location_data values (1200, "Venice", "10934");
+insert into Location_data values (1500, "Tokyo", "1689");
+insert into Location_data values (1700, "Seattle", "98199");
+insert into Location_data values (1800, "Toronto", "M5V 2L7");
+insert into Location_data values (2400, "Sydney", "2901");
+
+
+#Best way to learn and to reduce confusion is doing it as a 3-step process
+#Fetch the list of employees from Seattle 1st step
+select Location_Id
+from Location_data
+where Location_Name = "Seattle";
+	
+#Second step    
+select dept_Id 
+from department_data
+where Location_Id in
+	(select Location_Id
+	from Location_data
+	where Location_Name = "Seattle");
+    
+#adding all steps to make it a final query
+select * from Employees_data
+where dept_Id in 
+(select dept_Id
+from department_data
+where Location_Id in
+	(select Location_Id
+	from Location_data
+	where Location_Name = "Seattle"));
+
+
