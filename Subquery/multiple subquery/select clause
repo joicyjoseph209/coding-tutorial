@@ -1,0 +1,41 @@
+#Multiple subqueries with select clause
+#We can use subqueries inside a select clause, within in a subquery with aggregation function
+#These are useful to gain simple statistics which will be used across every record in the outer query
+
+#Syntax:
+
+SELECT Col1, (SELECT ... FROM TABLE)
+FROM TABLE;
+
+#data for practice=========================================================================================================================================================
+create table Transactions (
+Transaction_Id INT NOT NULL,
+customer_id INT NOT NULL,
+product_id INT NOT NULL,
+store_id INT NOT NULL,
+quantity INT NOT NULL,
+price INT NOT NULL);
+
+Insert into Transactions values(101, 712345011, 10000325, 36001, 3, 40);
+Insert into Transactions values(105, 712345033, 10000456, 36002, 4, 70);
+Insert into Transactions values(110, 712345011, 10000908, 36003, 1, 48);
+Insert into Transactions values(236, 712345044, 10000336, 36001, 5, 120);
+Insert into Transactions values(115, 712345056, 10000224, 36001, 10, 350);
+Insert into Transactions values(205, 712345068, 10000329, 36003, 2, 54);
+
+#Find out how much percentage each store has contributed to the sales
+#part 1
+select store_id, sum(quantity*price)
+from Transactions
+group by store_id
+order by percentage_sales DESC;
+
+#part 2 
+select sum(quantity*price) as sales 
+from Transactions;
+
+#part 3
+select store_id, sum(quantity*price) / (select sum(quantity*price) from Transactions) * 100 as percentage_sales
+from Transactions
+group by store_id
+order by percentage_sales DESC;
