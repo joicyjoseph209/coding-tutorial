@@ -1,0 +1,48 @@
+#Subqueries 
+# Inside a FROM clause
+# These are usually called INLINE QUERIES and are used when we dont have a table with the required information in the database
+
+# Find out the store that contribute more than 15% of the sales from Transactions table
+
+#Syntax
+select col1, col2
+	from (select col1, col2
+    from table_name
+    [where predicate] as alias_name
+    where predicate;
+
+data to practive the above query-----------------------------------------------------------------------------------------------------------------------------------------------
+
+create table Transactions (
+Transaction_Id INT NOT NULL,
+customer_id INT NOT NULL,
+product_id INT NOT NULL,
+store_id INT NOT NULL,
+quantity INT NOT NULL,
+price INT NOT NULL);
+
+Insert into Transactions values(101, 712345011, 10000325, 36001, 3, 40);
+Insert into Transactions values(105, 712345033, 10000456, 36002, 4, 70);
+Insert into Transactions values(110, 712345011, 10000908, 36003, 1, 48);
+Insert into Transactions values(236, 712345044, 10000336, 36001, 5, 120);
+Insert into Transactions values(115, 712345056, 10000224, 36001, 10, 350);
+Insert into Transactions values(205, 712345068, 10000329, 36003, 2, 54);
+
+    
+select * from(
+	select store_id, sum(quantity * price) / (select sum(quantity * price) from Transactions) * 100 as Percentage
+	from Transactions
+	group by store_id
+	order by Percentage DESC) as T
+where Percentage > 15;
+
+Example on a bigger data set-------------------------------------------------------------------------------------------------------------------------------------------------
+select * from
+        (
+        select store_id, sum(quantity*price_inr)/(select sum(quantity*price_inr)
+        from transactions_ecommerce) * 100 as percentage_sales_per_store
+        from transactions_ecommerce
+        group by store_id
+        order by percentage_sales_per_store desc
+        ) as T
+where percentage_sales_per_store > 14;
