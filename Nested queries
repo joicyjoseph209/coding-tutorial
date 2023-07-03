@@ -1,0 +1,50 @@
+# Just like how a subquery is embedded within a SQL query, a nested query in SQL contains a query inside another query.
+# The outer query will use the result of the inner query
+# Therefore, nested queries are usually a long chain of subqueries that work on the inner query’s output. 
+# Note that SQL will always evaluate the innermost query first and then the outermost ones later.
+# What’s the benefit of this? 
+# You can write intricate queries that are easier to read and maintain and are useful to break complex logic into smaller chunks. 
+
+#Syntax:
+SELECT Col1, Col2,...
+FROM   TABLE1 [, TABLE2 ]
+WHERE  PREDICATE
+   (SELECT Col_N] FROM TABLE1[, TABLE2]
+   WHERE PREDICATE
+(SELECT Col_N] FROM TABLE1[, TABLE2]
+   [WHERE PREDICATE]))
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Create table  Supermarket_sales(
+Invoice_Id  varchar(55),
+Product_line varchar(55),
+Unit_price float,
+Quantity INT NOT NULL,	
+Cost_of_goods_sold float);
+
+insert into Supermarket_sales (Invoice_Id, Product_line, Unit_price, Quantity, Cost_of_goods_sold) values
+('750-67-8438', 'Health and beauty', 74.69, 7, 522.83),
+('226-31-3081', 'Sports and travel', 15.28, 5, 76.40),
+('373-73-7910', 'Health and beauty', 58.22, 8, 465.76),
+('252-56-2699', 'Food and Beverage', 43.19, 10, 431.90),
+('656-95-9349', 'Food and Beverage', 68.84, 6, 413.04),
+('319-50-3348', 'Sports and travel', 40.3, 2, 80.60);
+
+#Get the product line that has 2nd highest quantity of goods sold-------------------------------------------------------------------------------------------------------------
+
+select Product_line, sum(Quantity) as Sum_of_goods_sold_1
+from Supermarket_sales
+group by Product_line
+having Sum_of_goods_sold_1 NOT IN 
+(
+select max(Sum_of_goods_sold) 
+from (
+	select Product_line, sum(Quantity) as Sum_of_goods_sold
+	from Supermarket_sales
+	group by Product_line
+	order by sum(Quantity) desc
+    ) as T1
+)
+order by Sum_of_goods_sold_1 desc
+limit 1;
+    
+
