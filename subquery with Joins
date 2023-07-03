@@ -1,0 +1,47 @@
+#Subqueries are often used with JOINS in SQL
+
+Create table Order_details2 (
+Order_details2 INT NOT NULL,
+Product_code varchar(55),
+Quantity_ordered INT NOT NULL,
+Price_each INT NOT NULL,
+Order_line_number INT NOT NULL);
+
+create table Products3(
+Product_code varchar(55),
+Product_name varchar(55),
+Product_line varchar(55),
+Quantity_in_stock  INT NOT NULL);
+
+insert into Products3 (Product_code, Product_name, Product_line, Quantity_in_stock) values
+('S18_1749', 'Sedan', 'Vintage car', 7900),
+('S18_1678', 'Mustang', 'classic car', 3253),
+('S18_2248', 'Ferrari', 'classic car', 958),
+('S18_1666', 'Setra bus', 'Truck & bus', 68),
+('S18_2823', 'Suzuki', 'Motorcycle', 6907),
+('S18_4409', 'Mazda', 'classic car', 2724);
+
+
+	insert into Order_details2 (Order_Number, Product_code, Quantity_ordered, Price_each, Order_line_number) values	
+(101, 'S18_1749', 30, 136, 1),
+(105, 'S18_1749', 20, 153, 1),
+(110, 'S18_2248', 25, 55, 1),
+(236, 'S18_2248', 10, 50, 2),
+(115, 'S18_1749', 35, 141, 3),
+(205, 'S18_4409', 40, 88, 2);
+
+
+#Get the total number of orders, total quantity sold and available quantity in the stock for the products.------------------------------------------------------------------
+
+select od.Product_code, 
+count(od.Product_code) as Total_orders, 
+sum(od.Quantity_ordered) as Units_orders,
+(p.Quantity_in_stock - sum(od.Quantity_ordered)) as Available_quantity
+from Order_details2 as od
+join Products3 as p
+on od.Product_code = p.Product_code
+group by od.Product_code, p.Quantity_in_stock;
+
+
+
+
