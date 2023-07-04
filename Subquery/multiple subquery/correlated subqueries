@@ -1,0 +1,44 @@
+# Correlated subqueries are used for row-by-row processing. 
+# You can easily recognize them because the outer query column will be used inside the subquery. 
+# It is used whenever a subquery must return a different set of results for each candidate row considered by the main query.
+# Subquery is dependent on the main query. Then it is called a Correlated subquery
+
+#Syntax
+select col1, col2
+from table1 as Outer_table
+where col1 operator
+  (select col1, col2
+  from table2
+where expression1 = Outer_table.expression2);
+
+
+#data for practice--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Create table  Employees_info(
+Emp_Id  INT NOT NULL primary key,
+First_name varchar(55),
+Hire_date varchar(55),
+Department varchar(55),	
+salary int not null);
+
+insert into Employees_info (Emp_Id, First_name, Hire_date, Department, salary) values
+(315, 'Veronica', 'April 20,2016', 'Sports', 95313),
+(245, 'Jessey', 'July 17,2011', 'Computers', 85307),
+(350, 'Emanuel', 'Jan 25,2018', 'Computers', 42753),
+(209, 'Lucy', 'Mar 20,2010', 'Clothing', 154864),
+(398, 'Charles', 'May 10,2018', 'Computers', 66752),
+(405,'Daniel', 'Dec 01,2019', 'Clothing', 72225),
+(298, 'Edna', 'June 04,2012', 'Sports', 38162);
+
+#solution ---------------------------------------------------------------------------------------------------------------------------------------------------------------
+select avg(salary), Department 
+from Employees_info
+group by Department
+order by avg(salary) desc;
+
+#final solution merged with subquery---------------------------------------------------------------------------------------------------------------------------------------
+select Emp_Id, First_name, Department, salary
+from Employees_info
+where salary > (select avg(salary) 
+					from Employees_info
+                    where Department = Employees_info.Department
+					order by salary desc);
