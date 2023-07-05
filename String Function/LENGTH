@@ -1,4 +1,7 @@
 #Syntax
+LENGTH(string)
+
+
 SELECT LENGTH(User_Country)
 FROM User;
 
