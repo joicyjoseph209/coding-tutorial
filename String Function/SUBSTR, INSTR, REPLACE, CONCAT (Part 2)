@@ -1,0 +1,91 @@
+#SUBSTR which lets you extract a substring from a given string 
+#Syntax: SUBSTR(string, start, length) 
+start if (+) number then SUBSTR will extract from the beginning of the string. 
+If (-) number then SUBSTR will extract from the end of the string
+
+#INSTR which lets you search and return the position of the first occurrence of the string within another string
+#Syntax: INSTR(string_1, string_2)
+String_1: Will be searched
+String_2: The character or string to search for in String_1. If incase its not found in string_1 then it would return the result 0
+
+#REPLACE which lets you replace a substring with another string
+#Syntax: REPLACE(string, from_string, new_string)
+string: The original string which you want to replace
+from_string: The substring that you want to replace
+new_string: The new replacement substring
+
+#CONCAT which lets you concatenate/combine two or more strings together
+#Syntax
+CONCAT(expression_1, expression_2.....);
+
+
+#CONCAT_WS: CONCAT with separator function, Which is used to add 2 or more strings together with a specified separator. 
+#Syntax
+CONCAT_WS(separator, expression_1, expression_2.....);
+#the separator will be added after every string
+
+data for practice------------------------------------------------------------------------------------------------------------------------------------------------------------
+Create table Order_details2 (
+Order_details2 INT NOT NULL,
+Product_code varchar(55),
+Quantity_ordered INT NOT NULL,
+Price_each INT NOT NULL,
+Order_line_number INT NOT NULL);
+
+insert into Order_details2 (Order_Number, Product_code, Quantity_ordered, Price_each, Order_line_number) values	
+(101, 'S18_1749', 30, 136, 1),
+(105, 'S18_1749', 20, 153, 1),
+(110, 'S18_2248', 25, 55, 1),
+(236, 'S18_2248', 10, 50, 2),
+(115, 'S18_1749', 35, 141, 3),
+(205, 'S18_4409', 40, 88, 2);
+
+Substr example-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Fetch the Product_Id from Product_code where Product_Id is the last 4 digits of the Product_code
+
+select Order_Number, Product_code, SUBSTR(Product_code, 5, 4) as Product_Id 
+from Order_details2;
+
+instr example-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Fetch the position of (_) in the given Product_code
+
+select Order_Number, Product_code, INSTR(Product_code, '_')
+from Order_details2;
+
+REPLACE example-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Replace the (_) with a (-) in the table order_details
+
+select Order_Number, Product_code, REPLACE(Product_code, '_', '-') as hyphen_index
+from Order_details2;
+
+
+CONCAT example-------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Join 2 columns first_name & last_name and make an additional column Full_name for the same
+
+select first_name, last_name, CONCAT(first_name,'  ',last_name) as Full_name 
+from employees_info;
+
+CONCAT_WS example-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+select first_name, last_name, CONCAT_WS(' ',first_name,last_name) as Full_name 
+from employees_info;
+#Adds (space) between the strings
+
+OR
+
+select first_name, last_name, CONCAT_WS('_',first_name,last_name) as Full_name 
+from employees_info;
+#Adds (-) between the strings
+
+OR
+
+select first_name, last_name, CONCAT_WS('-',first_name,last_name) as Full_name 
+from employees_info;
+
+#Adds (_) between the strings
+
+#Create a unique key with employee, first_name and last_name----------------------------------------------------------------------------------------------------------------
+
+select first_name, last_name, CONCAT_WS('-',employee_id,first_name,last_name) as unique_key 
+from employees_info;
