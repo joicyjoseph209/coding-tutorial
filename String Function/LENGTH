@@ -1,0 +1,18 @@
+#Syntax
+SELECT LENGTH(User_Country)
+FROM User;
+
+S.no lan User_Country User_City
+1	en-US	USA	Seatle
+2	en-UK	Uk	London
+3	en-IN	INDIA	Delhi
+
+LENGTH(User_Country)
+
+3
+
+2
+
+5
+
+This is because “USA” has 3 characters, “UK” has 2 characters, and “INDIA” has 5 characters.
