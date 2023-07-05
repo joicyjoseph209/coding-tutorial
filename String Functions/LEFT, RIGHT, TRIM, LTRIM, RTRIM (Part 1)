@@ -1,0 +1,57 @@
+#String functions are used to perform an operation on input string and return an output string
+
+#LEFT which returns a specified number of characters from the left side of a string #Syntax LEFT(string, number_of_characters);
+#RIGHT which returns a specified number of characters from the right side of a string #Syntax RIGHT(string, number_of_characters);
+#TRIM which removes all leading and trailing spaces from a string  #Syntax TRIM(string);
+#LTRIM which removes only leading spaces from a string #Syntax LTRIM(string);
+#RTRIM which removes only trailing spaces from a string #Syntax RTRIM(string);
+
+Data----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Create table Order_details2 (
+Order_details2 INT NOT NULL,
+Product_code varchar(55),
+Quantity_ordered INT NOT NULL,
+Price_each INT NOT NULL,
+Order_line_number INT NOT NULL);
+
+insert into Order_details2 (Order_Number, Product_code, Quantity_ordered, Price_each, Order_line_number) values	
+(101, 'S18_1749', 30, 136, 1),
+(105, 'S18_1749', 20, 153, 1),
+(110, 'S18_2248', 25, 55, 1),
+(236, 'S18_2248', 10, 50, 2),
+(115, 'S18_1749', 35, 141, 3),
+(205, 'S18_4409', 40, 88, 2);
+
+Question--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Fetch first 3 digits of the Product_code as Product_Id
+select Order_Number, Product_code, LEFT(Product_code, 3) as Product_Id 
+from Order_details2;
+
+#Fetch last 4 digits of the Product_code as Product_Id
+
+select Order_Number, Product_code, RIGHT(Product_code, 4) as Product_Id 
+from Order_details2;
+
+Practice on a bigger dataset-------------------------------------------------------------------------------------------------------------------------------------------------
+
+select left(first_name, 1) as First_letter, count(first_name) 
+from employees_info
+group by First_letter
+order by First_letter;
+
+#List of employees whose name starts and ends with a vowel from employees_info
+
+select left(first_name, 1) as First_letter, right(first_name, 1) as last_letter, first_name
+from employees_info
+having First_letter in ('A', 'E', 'I', 'O', 'U') and last_letter in ('a', 'e', 'i', 'o', 'u')
+order by First_letter;
+
+LTRIM, RTRIM and TRIM--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+select TRIM('.' from comments) as trimmed_comments, comments from cr_orders;
+
+select LTRIM(comments) as trimmed_comments, comments from cr_orders;
+
+select RTRIM(comments) as trimmed_comments, comments 
+from cr_orders where comments !="";
