@@ -1,0 +1,28 @@
+# Lower function is used to convert the string to lowercase
+# Upper function is used to convert the string to UPPER CASE
+# COALESCE function returns the first NON NULL value out of all arguments that are provided to it
+
+#Syntax, the string will exactly be converted to lower or upper case
+LOWER(string)
+UPPER(string)
+
+DATA for practice----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+create table Employees_data3 (
+Employee_id INT NOT NULL,
+FIRST_NAME varchar(55),
+LAST_NAME varchar(55),
+USER_NAME varchar(55),
+JOB_ID varchar(55));
+
+insert into Employees_data3 (Employee_id, FIRST_NAME, LAST_NAME, USER_NAME, JOB_ID) values
+(100, 'Steven', 'King', 'sking', 'AD_PRES'),
+(101, 'Neena', 'Kocchar', 'nkochhar', 'AD_VP'),
+(102, 'Lex', 'De Haan', 'Idehaan', 'AD_VP'),
+(103, '', '', 'ahunold', 'IT_PROG'),
+(104, 'Bruce', 'King', 'bernst', 'IT_PROG');
+
+Solution
+select UPPER(USER_NAME), LOWER(JOB_ID) 
+from Employees_data3;
+
