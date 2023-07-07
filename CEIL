@@ -1,0 +1,10 @@
+# CEIL function returns the next integer value of a given fraction number or decimal. for example 74.65 = 75
+
+#Syntax
+select CEIL(col_name),
+from Supermarket_sales;
+
+example
+select Unit_price, 
+ceil(Unit_price),
+from Supermarket_sales;
