@@ -1,0 +1,15 @@
+# MOD function returns the remainder of a number divided by another number.
+#MOD takes 2 arguments MOD(num1, num2) num1 = dividend, num2 = divisor
+
+#Get sales data for rows with an even value of quantity of goods sold
+
+select *
+from Supermarket_sales
+where MOD(Quantity,2) = 0;
+
+
+#Get sales data for rows with an odd value of quantity of goods sold
+
+select *
+from Supermarket_sales
+where MOD(Quantity,2) != 0;
