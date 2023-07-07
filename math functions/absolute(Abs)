@@ -1,0 +1,16 @@
+#Abs (Absolute) function is used to return the positive value of a number
+
+#Syntax
+ABS(Number) or col_name
+from table_name;
+
+example
+select abs(Unit_price)
+from Supermarket_sales;
+
+Q. #Q. Calculate the average of all products. Round this value to the nearest 2 decimal places, then for each product 
+#get the magnitude (absolute values) of the difference between the products unit price and the rounded average unit price (you calculated in the first part).
+
+select abs(Unit_price - (select round(avg(Unit_price), 2)
+from Supermarket_sales)) as magnitude
+from Supermarket_sales;
