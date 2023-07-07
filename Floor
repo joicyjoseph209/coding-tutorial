@@ -1,0 +1,10 @@
+#Floor function returns the previous integer value of a given fraction number or decimal for example 74.65 = 74
+
+#Syntax
+select FLOOR(col_name)
+from table_name;
+
+example
+select Unit_price,
+floor(Unit_price)
+from Supermarket_sales;
