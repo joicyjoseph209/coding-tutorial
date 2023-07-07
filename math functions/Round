@@ -1,0 +1,10 @@
+# Round function is used to round a number to a specified number of decimal places.
+
+#Syntax
+ROUND(Number, decimals) col_name, number_of_decimals
+from table_name
+
+example
+
+select round(Unit_price)
+from Supermarket_sales;
