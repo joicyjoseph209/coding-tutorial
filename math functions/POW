@@ -1,0 +1,48 @@
+# The POW function returns the value of a number raised to the power of another number.
+# It can also be used as Power
+
+#Syntax
+POW(num1, num2)
+POWER(num1, num2)
+ 
+#Num1 - base, the number which has to be squared
+#Num2 - exponent which power we want to use
+
+
+#data for practice
+Create table  Supermarket_sales(
+Invoice_Id  varchar(55),
+Product_line varchar(55),
+Unit_price float,
+Quantity INT NOT NULL,	
+Cost_of_goods_sold float);
+
+insert into Supermarket_sales (Invoice_Id, Product_line, Unit_price, Quantity, Cost_of_goods_sold) values
+('750-67-8438', 'Health and beauty', 74.69, 7, 522.83),
+('226-31-3081', 'Sports and travel', 15.28, 5, 76.40),
+('373-73-7910', 'Health and beauty', 58.22, 8, 465.76),
+('252-56-2699', 'Food and Beverage', 43.19, 10, 431.90),
+('656-95-9349', 'Food and Beverage', 68.84, 6, 413.04),
+('319-50-3348', 'Sports and travel', 40.3, 2, 80.60);
+
+#Example------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Get the variance of quantity of goods sold (variance = [quantity - Average_quantity]^2/total number) or standard deviation squared
+
+select avg(Quantity)
+from Supermarket_sales;
+
+# Get the squared diffrerence between quantity and average quantity 
+select power(Quantity - (select avg(Quantity)
+			from Supermarket_sales), 2)
+from Supermarket_sales;
+
+# Get the average of squared diffrerence between quantity and average quantity which is variance
+select avg(power(Quantity - (select avg(Quantity)
+			from Supermarket_sales), 2))
+from Supermarket_sales;
+
+#or
+
+select variance(Quantity)
+from Supermarket_sales;
+
