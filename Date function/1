@@ -1,0 +1,28 @@
+#Date time function helps with the date formats and manipulates the date-related columns.
+
+#Syntax
+#select DATE_TIME_FUNCTION()
+as DATE_TIME_FORMAT
+from Table_Name;
+
+
+#NOW(): This function helps in getting both	the current date and current time
+#CURRENT_DATE(): This function helps in getting the current date only
+#CURRENT_TIME(): This function helps in getting the current time only
+
+
+
+#Your analytics team wants to retrieve the employee details along with the current date and time.
+
+#current_date will fetch the current date and time
+select *, 
+now() as 'current_date' 
+from orders;
+
+#select date and time as a separate field from the table
+select *, 
+current_date as 'current_date', 
+#for date field
+current_time as 'current_time'
+#for time field
+from orders;
