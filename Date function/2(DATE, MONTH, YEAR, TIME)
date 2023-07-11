@@ -1,0 +1,55 @@
+#Date(): FUnction returns the date from date_time column
+#Month(): Function returns the month from date_time column
+#Year(): FUnction returns the year from date_time column
+#time(): HOUR() extracts hour, Minute() extracts minute, Second() extracts second
+
+#Syntax
+select DATE_TIME_FUNCTION(date_time_col)
+as Date_time_format
+from Table_name;
+
+
+#Extract order_date as extracted_date from orders table
+select *, 
+date(order_date) as extracted_date
+from orders;
+
+#Extract month as extracted_date from orders table
+
+select *, 
+month(order_date) as extracted_month
+from orders;
+
+#Extract year as extracted_date from orders table
+
+select *, 
+year(order_date) as extracted_year
+from orders;
+
+#Extract hour, minute and second as extracted_date from orders table
+
+select *, NOW() as 'Current_date_time',
+hour(NOW()) as 'Extracted_hour',
+minute(NOW()) as 'Extracted_minute',
+hour(NOW()) as 'Extracted_second'
+from 
+orders; #table name orders
+
+
+#Minimum salary across months based on the Hire date
+
+select month(HIRE_DATE) as month_hire,
+min(salary) as 'MIN_SALARY'
+from 
+employees_data
+group by month_hire
+order by month_hire;
+
+#Max salary across year-wise based on the Hire date
+
+select year(HIRE_DATE) as year_hire,
+max(salary) as 'MAX_SALARY'
+from 
+employees_data
+group by year_hire
+order by year_hire;
