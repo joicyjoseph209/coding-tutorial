@@ -1,0 +1,64 @@
+#EXTRACT to extract a specific part of a date time value like the year, month, day, week, hour or second till the microsecond. 
+#All the individual date_time functions available to the user can be directly used within the extract function  
+
+#Syntax
+select col1, col2
+Extract(DATE_TIME_FUNCTION from date_time_col)
+from table_name;
+
+#DATEADD/ DATE_ADD & DATEDIFF to perform basic addition/subtraction on date times
+#DATEDIFF also finds out the difference between 2 dates (in number of days format)
+
+#Syntax
+select col1, col2
+DATE_ADD(DATE_TIME, INTERVAL val_to_add Interval_type)
+from table_name;
+
+#Syntax
+select col1, col2
+DATEDIFF(First_date, Second_date)
+from table_name;
+
+
+#DATE_FORMAT to display date and time values in various formats (e.g. YYYY-MM-DD or DD/MM/YYYY etc.)
+#Or helps us format the date the way we want
+
+#Syntax
+select col1, col2
+DATE_FORMAT(date_time, format)
+from table_name;
+
+#Questions------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Analytical team wants the week, month and quarter of each employee hire date
+
+select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, HIRE_DATE,
+extract(week from HIRE_DATE) as Extracted_week,
+extract(month from HIRE_DATE) as Extracted_month,
+extract(quarter from HIRE_DATE) as Extracted_quarter
+from 
+employees_data;
+
+#The company has 1 month probation period for all the employees after they get hired, retrieve the employee records along with a column to get the end of the probation date
+
+select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, HIRE_DATE,
+DATE_ADD(HIRE_DATE, INTERVAL 1 MONTH) as Probation_end,
+DATE_ADD(HIRE_DATE, INTERVAL 1 YEAR) as Next_year
+from 
+employees_data;
+
+#Find out difference in date between employees Hire_date and Probation_end date.
+
+select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, HIRE_DATE,
+DATE_ADD(HIRE_DATE, INTERVAL 1 MONTH) as Probation_end,
+DATE_ADD(HIRE_DATE, INTERVAL 1 YEAR) as Next_year,
+DATEDIFF(DATE_ADD(HIRE_DATE, INTERVAL 1 MONTH), HIRE_DATE) as Probation_period
+from 
+employees_data;
+
+#The analytics team the date format for each employees differently. They would like to see the week as well preceding the other date information
+
+select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, HIRE_DATE,
+DATE_FORMAT(HIRE_DATE, '%W, %M %d, %Y') as 'DATE_FORMAT'
+from 
+employees_data;
+
