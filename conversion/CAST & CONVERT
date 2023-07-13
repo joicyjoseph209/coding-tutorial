@@ -1,0 +1,17 @@
+#Conversion functions - They are used to change the data type of any column from one type to another
+#Syntax
+
+
+# Q. Add a column which the <First_name> <Last_name> and <Year_of_hire> for all the employees in the employee table using CAST function
+
+select *,
+concat(FIRST_NAME,' ',LAST_NAME,' ', 'was hired in',' ', CAST(year(HIRE_DATE)as char)) as comment
+from 
+employees_data;
+
+# Q. Add a column which the <First_name> <Last_name> and <Year_of_hire> for all the employees in the employee table using CONVERT function
+
+select *,
+concat(FIRST_NAME,' ',LAST_NAME,' ', 'was hired in',' ', convert(year(HIRE_DATE), char)) as comment
+from 
+employees_data;
