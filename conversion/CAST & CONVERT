@@ -1,5 +1,10 @@
 #Conversion functions - They are used to change the data type of any column from one type to another
+
 #Syntax
+CAST(convert_to_value AS data_type)
+
+#Syntax
+CONVERT(convert_to_value, data_type)
 
 
 # Q. Add a column which the <First_name> <Last_name> and <Year_of_hire> for all the employees in the employee table using CAST function
