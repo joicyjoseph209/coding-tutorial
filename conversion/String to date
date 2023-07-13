@@ -1,0 +1,10 @@
+STR_TO_DATE(): Helps to convert string value, based on the format specified, into a date time value (so that you can apply any date time function on top of it)
+#Syntax'
+str_to_date(String_value, format)
+
+# Q. Extract the date from shipment date comment
+
+select shipment_date, 
+str_to_date(substr(shipment_date, 13), '%M %d, %Y') as converted_date
+from 
+sales_2022;
