@@ -1,0 +1,38 @@
+# Window function: SQL windows function lets you perform calculations, on a group of rows defined by a window, based on the current row
+# Unlike other aggregation functions that group rows into one row, windows function keep the original rows of data and add a new column with the result of given calculation
+
+#OVER - The over clause is used with a windows function, to specify the partitioning, ordering and framing of the query
+
+#Syntax
+
+window_function(col_name)
+over ([partition] [over] [frame])
+
+#[] bracket mean that its an optional argument
+
+#Partition: This helps in dividing or breaking the set of observations into different frames or sections depending on expression of the column provided
+
+#syntax
+Partition BY <expression/col> [{,<expression/col>...}]
+
+#Order: This helps in sorting the data within a predefined partition
+
+#syntax
+Order BY <expression> [ASC/DESC], [{,<expression>...}]
+#by default ORDER BY takes ASC
+
+#FRAME: This record helps in providing the offset from the current record/observation. 
+#Think of this as a moving window that moves along with every record within a predefined partition
+
+
+#syntax
+
+FRAME_UNIT {<start_frame_index>|<frame_between>}
+#start_frame_index & frame_between defined the boundary of the frame
+
+
+#apply windows function and apply the count column as count of region
+
+select *, 
+count(region) over (partition by country) as Number_of_regions
+from regions;
