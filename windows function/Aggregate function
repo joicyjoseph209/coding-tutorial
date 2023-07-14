@@ -1,0 +1,58 @@
+#Aggregate function in Windows function, where each aggregate, where each aggregate value will be labeled to each record in the table.
+
+COUNT(): Gives you the count of items across each partition
+SUM(): Gives you the Sum of items across each partition
+MIN() & MAX(): Gives you the min/max of items across each partition
+AVG(): Gives you the average of items across each partition
+
+#Syntax
+
+select col1, col2....
+window_agg_func(col_name) over ([partition])
+from table_name;
+
+.............................................................................................................................................................................
+
+#apply the windows function and apply the count column as count of region
+
+select *, 
+count(region) over (partition by country) as Number_of_regions
+from regions;
+
+#Q. Along with each record, get the fraction of employees working in each department(out of the total employees working for the company)
+
+select *,
+count(EMPLOYEE_ID) over (partition by DEPARTMENT_ID)/count(EMPLOYEE_ID) over ()*100  as fraction_of_employees
+from employees_data;
+
+#Q. Along with total salary, get the fraction of employees salary in each department(out of the total salary for the company)
+
+select *,
+SUM(SALARY) over (partition by DEPARTMENT_ID) as Total_dept_salary,
+SALARY/SUM(SALARY) over (partition by DEPARTMENT_ID)*100  as fraction_of_salary
+from employees_data;
+
+#Q Retrieve the record where employee salary is higher than the average SALARY
+
+select *
+from 
+(select *,
+MAX(SALARY) over (partition by DEPARTMENT_ID) as Max_dept_salary,
+MIN(SALARY) over (partition by DEPARTMENT_ID) as Min_dept_salary
+from employees_data) as table2
+where table2.Max_dept_salary  table2.Min_dept_salary;
+
+
+
+select *,
+MAX(SALARY) over (partition by DEPARTMENT_ID) -MIN(SALARY) over (partition by DEPARTMENT_ID) as statistical_range
+from employees_data;
+
+#Q calculate the statistical range of each employees salary for each department
+
+select *
+from 
+(select *,
+AVG(SALARY) over (partition by DEPARTMENT_ID) as Average_dept_salary
+from employees_data) as table2
+where table2.SALARY > table2.Average_dept_salary;
