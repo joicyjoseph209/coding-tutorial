@@ -1,0 +1,28 @@
+#Frame: It is used to define a frame or a subset of the current partition. It helps in moving within the partition with respect to the current row
+#Keywords of frame
+--UNBOUNDED PRECEDING: The first row of the partition, usually the default of the frame clause is range between UNBOUNDED PRECEDING - CURRENT ROW
+--N PRECEDING: N rows before the current row
+--CURRENT ROW: The current row
+--M FOLLOWING: M rows after the current row
+--UNBOUNDED FOLLOWING: The last row of the partition
+
+
+#Calculate the running total of the revenue or the cumulative revenue
+
+SELECT *,
+       SUM(revenue) OVER (ORDER BY date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_total
+FROM sales_eon;
+
+#Calculate the 3 days moving average temprature seperately for each city. (Moving average) across the city
+
+select *, 
+  avg(temperature) over (partition by city order by date rows BETWEEN current row and 2 following) as Moving_average
+from weather
+order by city, date;
+
+#Calculate the total precipitation for last 2 days for each city. (2 days running_total) seperately for cities
+
+select *, 
+  sum(precipitation) over (partition by city order by date rows BETWEEN  1 PRECEDING and current row) as Running_total
+from weather
+order by city, date;
