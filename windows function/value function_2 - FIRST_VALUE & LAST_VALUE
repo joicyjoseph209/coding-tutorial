@@ -1,0 +1,42 @@
+#Value windows function allows you to perform calculations on a specific subset of rows in a result set
+
+#FIRST_VALUE(): This Windows function returns the value of the specified expression with respect to the FIRST row in the Windows frame
+
+#Syntax
+select col1, col2
+FIRST_VALUE(col|Expression) over ([partition], [order])
+from table_name;
+
+#LAST_VALUE(): This Windows function returns the value of the specified expression with respect to the LAST row in the Windows frame
+#By default it has a range of UNBOUNDED PRECEDING AND CURRENT, So in order to get the desired result, we have to modify the range
+
+#Syntax
+select col1, col2
+LAST_VALUE(col|Expression) over ([partition], [order])
+from table_name;
+
+Questions----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+#Display the Maximum_salary corresponding to each employee for each department
+
+select *,
+first_value(Salary_USD) over (partition by Department order by Salary_USD desc) as Max_salary
+from hospital_employee;
+
+#Display the Minimum_salary corresponding to each employee for each department
+
+select *,
+last_value(Salary_USD) over (partition by Department order by Salary_USD desc RANGE BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING) as Min_salary
+from hospital_employee;
+
+
+
+#or
+
+select *,
+last_value(Salary_USD) over (partition by Department order by Salary_USD desc RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) as Min_salary
+from hospital_employee; 
+
+
+
+
+ 
