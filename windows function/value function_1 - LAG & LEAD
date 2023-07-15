@@ -1,0 +1,40 @@
+#In SQL, Windows Value functions are powerful tools that allow you to perform calculations on a specific subset of rows in a result set
+
+#LAG(): This allows to access data from a previous row in the result set. This is useful when you want to compare values between adjacent rows
+
+#Syntax
+Select col1, col2
+LAG(COL|Expression[,offset][, default_value]) over ([partition], [order])
+from table
+  
+#LEAD(): This allows to access data from the Next row in the result set, allowing you to easily compare the value between the CURRENT & NEXT ROW
+
+#Syntax
+Select col1, col2
+LEAD(COL|Expression[,offset][, default_value]) over ([partition], [order])
+from table
+  
+
+ #Example question 
+#Display the salary of the previous employee corresponding to each employee for each department
+
+select *,
+LAG(Salary_USD, 1, 0) over (partition by Department order by Emp_id) as Previous_employee_salary
+from hospital_employee;
+
+#Display the salary of the previous employee corresponding to each employee for each department. Find the difference in salary
+
+select *,
+LAG(Salary_USD, 1, 0) over (partition by Department order by Emp_id) as Previous_employee_salary,
+Salary_USD - LAG(Salary_USD, 1, 0) over (partition by Department order by Emp_id) as Difference_in_salary
+from hospital_employee;
+
+
+#Display the salary of the NEXT employee corresponding to each employee for each department
+
+select *,
+lead(Salary_USD, 1, 0) over (partition by Department order by Emp_id) as Next_employee_salary
+from hospital_employee;
+
+
+  
