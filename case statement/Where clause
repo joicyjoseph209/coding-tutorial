@@ -1,0 +1,32 @@
+#Case statements with WHERE clause are used to filter out the records or match up the records based on multiple conditions
+#Syntax
+Select Col1, Col2,.....
+From Table_Name
+Where Expr operator
+CASE
+  When condition1 THEN expr1
+  When condition2 THEN expr2
+  .
+  .
+  .
+  When conditionN THEN exprN
+  Else default expr
+END;
+
+#Question
+#Get the employee records where the employee works in the:
+--Sports department and has a salary > 140000
+--Clothing department and has a salary > 70000
+--Tools department and has a salary > 60000
+
+select * 
+from employees_detail
+where department =
+Case
+when salary > 140000 then 'Toys'
+when salary > 70000 then 'Computers'
+when salary > 60000 then 'Books'
+end;
+
+
+
