@@ -1,0 +1,46 @@
+#Statistical function helps in identifying the distribution or rank of a column, which will be labeled to each record in your data
+
+#PERCENT_RANK: provides the percentile of the record in the defined partition
+-- Calculates the percentage of value less than the current value, ignoring the current value
+-- The outcome values are restricted between 0 and 1, where 0 = lowest rank or first value and 1 = highest rank or last value
+
+#Syntax
+select col1, col2
+PERCENT_RANK() over ([Partition] [Order])
+from Table_name; 
+
+#CUME_DIST: defines a cumulative distribution within a defined partition
+-- Calculates the percentage of value less than or equal to the current value
+-- The outcome values are restricted between 0 and 1
+
+#Syntax
+select col1, col2
+CUME_DIST() over ([Partition] [Order])
+from Table_name;
+
+#ROW_NUMBER: The function is used to assign a unique ranking to each record within the partition
+
+#Syntax
+select col1, col2
+ROW_NUMBER() over ([Partition] [Order])
+from Table_name;
+
+#Question----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+#Get the percentile rank and cumulative distribution, of employees working in the clothing department, based on salary.
+
+select EMPLOYEE_ID, FIRST_NAME, LAST_NAME, DEPARTMENT_ID, SALARY,
+percent_rank() over (Partition by DEPARTMENT_ID order by SALARY) as Percentile_rank,
+cume_dist() over (Partition by DEPARTMENT_ID order by SALARY) as cumulative_dist
+from employees_data
+where DEPARTMENT_ID = 90;
+
+# In this case the departments were assigned a number in the column department_id
+
+
+#Give each employee a unique identification number in each department to participate in an office event
+
+select *,
+row_number() over (partition by DEPARTMENT_ID order by EMPLOYEE_ID) as Unique_ID
+from employees_data;
+
