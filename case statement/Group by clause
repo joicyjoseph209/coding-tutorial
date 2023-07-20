@@ -1,0 +1,50 @@
+#Case statement with GROUP BY clause helps us create the categories on demand and get aggregations on top of it.
+
+#Syntax
+select CASE
+  When condition1 THEN Expr1
+  .
+  .
+  .
+  When conditionN THEN ExprN
+End as Alias_name, Aggregation_func(Col_name) AS Alias_Name
+FROM Table_Name
+group by CASE
+  When condition1 THEN Expr1
+  .
+  .
+  .
+  When conditionN THEN ExprN
+  Else default Expr
+END;
+
+
+#Q. The organization wants to label the employees to Executive class (>125000) salary VS Normal class and 
+--get the average salaries belonging to each class.
+
+select 
+CASE
+  WHEN salary < 125000 THEN 'Normal'
+  else 'Executive'
+  END as Employee_class,
+avg(salary) as Average_salary
+from employees_detail
+group by
+CASE
+  when salary < 125000 THEN 'Normal'
+  else 'Executive'
+end;
+
+or 
+
+select 
+CASE
+  WHEN salary < 125000 THEN 'Normal'
+  else 'Executive'
+END as Employee_class,
+avg(salary) as Average_salary
+from employees_detail
+group by
+Employee_class;
+
+  
