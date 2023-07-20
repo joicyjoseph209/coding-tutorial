@@ -1,0 +1,28 @@
+#Case Statement with ORDER BY clause helps us to manipulate/control the order of the output records
+
+#Syntax
+Select Col1, Col2,...
+From Table_name
+Order by CASE
+  When condition1 then expression1
+  When condition2 then expression2
+  .
+  .
+  .
+  When conditionN then expressionN
+  Else Default_expression
+END;
+
+
+
+#Q. The supermarket would like to sort 
+--customer experience ratings for cash payment
+--Total sales for digital payment(i.e. e-wallet and credit card)
+
+select Invoice_ID, Total, Payment, Customer_Rating
+from supermarket_sales
+order by
+CASE
+    when Payment = 'cash' then Customer_Rating
+    else Total
+End;
