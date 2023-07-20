@@ -1,0 +1,34 @@
+#Case statements are conditional statements that provide the results in output based on condition
+
+ #Syntax
+
+#IF(condition, Expression_if_true, Expression_if_false)
+  
+#case
+  #When condition1 then expre1
+  #When condition2 then expre2
+  .
+  .
+  #else default expression
+#END
+
+#Example code
+
+#Create a new column class with respect to salary column
+
+select employee_id, first_name, last_name, salary,
+        if (salary < 125000,'Normal', 'Executive') as class
+from employees_detail;
+
+#Create a new column class with respect to salary column using WHEN, THEN statement
+
+select employee_id, first_name, last_name, salary,
+        case
+        when salary < 125000 then 'Normal'
+        else 'Executive'
+        END as class
+    from employees_detail;
+    
+#Case when, then is used usually when there are multiple conditions
+  
+  
