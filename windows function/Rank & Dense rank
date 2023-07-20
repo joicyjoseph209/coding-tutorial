@@ -1,0 +1,24 @@
+#Statistical function helps us in identifying the distribution or rank of a column, which will be labeled to each record in your data.
+#RANK: Assigns equal rank to ties and will skip that many ranks while ranking subsequent records.
+
+#Syntax
+select col1, col2
+rank() over ([partition] [order])
+from table_name;
+
+#DENSE_RANK: Assigns equal rank to ties but does not skip any rank after ties.
+
+#Syntax
+select col1, col2
+dense_rank() over ([partition] [order])
+from table_name;
+
+#Q. Rank the products in the "Sports & Travel" product line depending on their associated customer Ranking
+
+#Rank and DENSE_RANKING]
+
+select Invoice_ID, Product_line, Customer_Rating,
+rank() over (partition by Product_line order by Customer_Rating) as Rank_product,
+dense_rank() over (partition by Product_line order by Customer_Rating) as dense_Rank_product
+from supermarket_sales
+where Product_line = "Sports and travel";
