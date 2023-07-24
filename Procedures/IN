@@ -1,0 +1,34 @@
+#IN parameter: IN parameter within SQL stored procedure helps in getting the arguments from the user while calling the same to manipulate queries
+
+#Syntax
+Delimiter $$
+create procedure Procedure_name(IN n data type)
+Begin
+  SQL query 
+End $$
+Delimiter ;
+
+#Q. The search engine company wants to run a task to generate the report regarding total engagement by TOP N languages on a daily basis.
+#Please create a store procedure for the same.
+
+#Stored procedure with IN parameter
+Delimiter $$
+create procedure Total_engagement_by_lan(IN n int)
+Begin
+select User_language, 
+		sum(Engagement) as Total_Engagements
+        from User as u
+        inner join User_Activity as ua
+        on u.User_id = ua.User_id
+group by User_language
+order by sum(Engagement) DESC
+limit n; 
+#There is an input value (IN) in the limit section, where we can limit the amount of output we want. Which is an Integer
+End $$
+
+Delimiter ;
+
+#we can change the limit by changing the input values
+call Total_engagement_by_lan(2);
+
+
