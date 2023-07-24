@@ -1,0 +1,32 @@
+#IN-OUT parameter: This parameter within the SQL stored procedure helps in getting the input from the User and getting the result from the procedure as well, 
+#to process the result in further queries (Accept (the user input)and returns the result)
+
+#Syntax
+Delimiter $$
+create procedure Procedure_name(INOUT n datatype)
+Begin
+   SQL query;
+End $$
+Delimiter ;
+  
+#Q. The search engine company wants to run a task to capture the count of current query records based on the provided user_id (e.g id = 1).
+#Create the store procedure for the same.(means based on the user_id we should be able to determine the count of queries he/she searched for)
+
+#Stored procedure with IN-OUT parameter
+Delimiter $$
+create procedure Get_count_of_user(INOUT n varchar(32))
+Begin
+    select count(*)
+	from User_Activity as ua
+	where User_Id = n
+	group by User_Id;
+End $$
+Delimiter ;
+
+
+#calling the output value
+set @n = 1;
+
+call Get_count_of_user(@n);
+
+select @n as count;
