@@ -1,0 +1,38 @@
+#OUT Parameter: OUT Parameter within SQL stored procedure helps in getting the results from the procedure to process the results in further queries
+
+#Syntax
+
+Delimiter $$
+create procedure Procedure_name(OUT n datatype)
+Begin
+    SQL query; 
+End $$
+Delimiter ;
+
+#Q. The search engine company wants to run the task to capture the queries belonging to the TOP 1 language based on total engagement on a daily basis. 
+#Please create a stored procedure for the same
+
+#Stored procedure with OUT parameter
+Delimiter $$
+create procedure Get_details(OUT n varchar(8))
+Begin
+    select User_language
+    into n
+    from User as u
+    inner join User_Activity as ua
+    on u.User_id = ua.User_id
+    group by User_language
+    order by sum(Engagement) DESC
+    limit 1; 
+End $$
+Delimiter ;
+
+
+#calling the output value
+call Get_details(@n);
+
+select ua.*
+from User_Activity as ua
+inner join User as u
+on u.User_id = ua.User_id
+where u.User_language = @n;
