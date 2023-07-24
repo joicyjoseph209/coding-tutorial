@@ -1,0 +1,65 @@
+# User-defined Functions:
+#1. Extend the power of SQL language by defining new functionalities
+#2. Perform some operations and return a value
+#3. Should always return a value (Even NULL)
+#4. Are directly called within SQL statements just like the traditional functions
+
+#DETERMINISTIC - This type of function returns the same value anytime they are called regardless of the input
+#NON-DETERMINISTIC - The output changes even if the input is same
+
+#Syntax
+
+Delimiter $$
+create function Func_name([para1] datatype1, [para2] datatype2.....[paraN] datatypeN)
+returns datatype
+[DETERMINISTIC] 
+Begin
+   Func_body
+   RETURN return_value
+End $$
+Delimiter ;
+
+#calling the function
+select *, Func_name(Col_name) as Alias_name
+from Table_name;
+
+#Q. Create a function to extract the 2-letter country code specified at the end of the User_Language.
+
+#data for practice
+
+CREATE TABLE User(
+User_Id int PRIMARY KEY,
+User_Language varchar(16),
+User_Country varchar(256),
+User_City varchar(256)
+);
+
+INSERT INTO User
+VALUES (1, "en-US", "USA", "Seattle");
+
+INSERT INTO User
+VALUES (2, "en-UK", "UK", "London");
+
+INSERT INTO User
+VALUES (3, "en-IN", "INDIA", "Delhi");
+
+#Solution
+#Stored procedure with IN-OUT parameter
+Delimiter $$
+create function country_code(language varchar(8))
+returns varchar(2)
+DETERMINISTIC 
+Begin
+    declare code varchar(2);
+    set code = right(language, 2);
+    return code;
+End $$
+Delimiter ;
+
+
+#calling the function
+select *, country_code(User_Language) as countrycode
+from User;
+
+
+
