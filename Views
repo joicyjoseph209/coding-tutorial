@@ -1,0 +1,51 @@
+#A View:
+#1. Is a virtual table containing rows and columns like the actual underlying table it is based on
+#2. Provides up-to-date data while they are queried
+#3. can be used when you want to deny access to the actual underlying table
+
+#Syntax
+Create view view_name AS
+select col1, col2, col3.......colN
+from Table_name
+where [predicate]; 
+
+#Syntax to update the view
+Create or replace view view_name AS
+select col1, col2, col3.......colN
+from Table_name
+where [predicate]; 
+
+Q. Create a view table that creates engagement values as "Low engagement level" if they are < 2; otherwise label them as "High engagement level"
+
+create view Engagement_levels as
+select User_Id, User_query, Engagement, 
+case
+when Engagement < 2 then 'Low engagement level'
+else 'High engagement level'
+END as engagement_level
+from User_Activity;
+
+#In order to make updates in the view table there are some options
+
+create or replace view Engagement_levels as 
+select User_Id, User_query, Engagement,
+case
+when Engagement = 2 then 'Medium engagement level'
+when Engagement < 2 then 'Low engagement level'
+else 'High engagement level'
+END as engagement_level
+from User_Activity;
+
+#Callin the view table
+select * from Engagement_levels;
+
+-- access view table--
+select * from Engagement_levels;
+
+-- access user_id 1 data from views table--
+select * 
+from Engagement_levels
+where User_Id = 1;
+
+
+
